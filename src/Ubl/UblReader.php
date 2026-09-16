@@ -283,7 +283,7 @@ final class UblReader
             $codeNode = $this->elementOrNull($node, 'cbc:PaymentMeansCode');
 
             $means[] = new PaymentMeans(
-                code: $codeNode?->textContent ?? '31',
+                code: $codeNode === null ? '31' : trim($codeNode->textContent),
                 iban: $this->text($node, 'cac:PayeeFinancialAccount/cbc:ID'),
                 accountName: $this->text($node, 'cac:PayeeFinancialAccount/cbc:Name'),
                 bic: $this->text($node, 'cac:PayeeFinancialAccount/cac:FinancialInstitutionBranch/cbc:ID'),
