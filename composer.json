@@ -1,0 +1,76 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "atlasflow/efactura-ro",
+    "description": "Romanian e-invoicing kernel: the EN 16931 document model, CIUS-RO UBL writer and reader, layered validation, and a PSR-18 client for ANAF's e-Factura API.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "efactura",
+        "e-factura",
+        "anaf",
+        "romania",
+        "e-invoicing",
+        "en16931",
+        "cius-ro",
+        "ubl",
+        "spv"
+    ],
+    "homepage": "https://github.com/atlasflow/efactura-ro",
+    "authors": [
+        {
+            "name": "AtlasFlow",
+            "homepage": "https://github.com/atlasflow"
+        }
+    ],
+    "require": {
+        "php": "^8.4",
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-libxml": "*",
+        "ext-zip": "*",
+        "brick/math": "^0.12 || ^0.13",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.18",
+        "nyholm/psr7": "^1.8",
+        "pestphp/pest": "^3.0 || ^4.0 || ^5.0",
+        "php-http/mock-client": "^1.6",
+        "phpstan/phpstan": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AtlasFlow\\EFacturaRo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AtlasFlow\\EFacturaRo\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "@php vendor/bin/pest --exclude-group=anaf-public,anaf-test",
+        "test:live": "@php vendor/bin/pest --group=anaf-public",
+        "lint": "@php vendor/bin/pint --parallel",
+        "lint:check": "@php vendor/bin/pint --parallel --test",
+        "analyse": "@php vendor/bin/phpstan analyse",
+        "ci:check": [
+            "Composer\\Config::disableProcessTimeout",
+            "@lint:check",
+            "@analyse",
+            "@php vendor/bin/pest --ci --exclude-group=anaf-test"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
