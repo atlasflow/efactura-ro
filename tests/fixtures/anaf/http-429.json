@@ -1,0 +1,1 @@
+{"timestamp":"2026-09-16T20:00:00.000+00:00","status":429,"error":"Too Many Requests","message":"Rate limit exceeded","path":"/prod/FCTEL/rest/stareMesaj"}
