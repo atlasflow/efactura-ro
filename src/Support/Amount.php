@@ -87,13 +87,13 @@ final readonly class Amount implements Stringable
 
     public function dividedBy(Amount|string|int $other, int $scale): self
     {
-        return new self($this->value->dividedBy(self::of($other)->value, $scale, RoundingMode::HALF_UP));
+        return new self($this->value->dividedBy(self::of($other)->value, $scale, RoundingMode::HalfUp));
     }
 
     /** Round half away from zero to the given number of decimals (EN 16931 "rounded to two decimals"). */
     public function rounded(int $scale = 2): self
     {
-        return new self($this->value->toScale($scale, RoundingMode::HALF_UP));
+        return new self($this->value->toScale($scale, RoundingMode::HalfUp));
     }
 
     public function abs(): self
