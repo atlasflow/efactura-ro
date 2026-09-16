@@ -21,10 +21,10 @@ it('builds every fixture document', function (string $name) {
         ->and($document->customizationId)->toBe(Document::CIUS_RO_CUSTOMIZATION_ID);
 })->with(array_keys(Documents::all()));
 
-it('refuses a credit note with nothing to credit', function () {
+it('accepts a credit note without BT-25, as ANAF does, but says one is expected', function () {
     $base = Documents::standardInvoice();
 
-    new Document(
+    $creditNote = new Document(
         type: DocumentType::CREDIT_NOTE,
         number: 'X',
         issueDate: $base->issueDate,
@@ -35,7 +35,11 @@ it('refuses a credit note with nothing to credit', function () {
         taxSubtotals: $base->taxSubtotals,
         totals: $base->totals,
     );
-})->throws(InvalidArgumentException::class, 'BT-25');
+
+    expect($creditNote->precedingDocuments)->toBe([])
+        ->and($creditNote->type->expectsPrecedingDocuments())->toBeTrue()
+        ->and(DocumentType::INVOICE->expectsPrecedingDocuments())->toBeFalse();
+});
 
 it('refuses a foreign-currency document without RON as tax currency', function () {
     $base = Documents::standardInvoice();

@@ -205,7 +205,7 @@ final class Documents
             dueDate: new DateTimeImmutable('2026-10-12'),
             taxCurrency: 'RON',
             taxTotalInTaxCurrency: Amount::of('0.00'),
-            delivery: new Delivery(new DateTimeImmutable('2026-09-11'), new Address('Hauptstraße 1', 'München', 'DE', null, '80331')),
+            delivery: new Delivery(new DateTimeImmutable('2026-09-11'), new Address('Hauptstraße 1', 'München', 'DE', 'DE-BY', '80331')),
             paymentMeans: [PaymentMeans::bankTransfer('RO49AAAA1B31007593840000')],
         );
     }

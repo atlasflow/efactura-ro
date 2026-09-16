@@ -11,9 +11,9 @@ use InvalidArgumentException;
 /**
  * An EN 16931 invoice or credit note as CIUS-RO shapes it. Immutable; every
  * amount arrives as an Amount the caller computed. Construction enforces
- * only what makes a document meaningless without it — a credit note with
- * nothing to credit, a foreign-currency document with no RON tax currency,
- * no lines at all; everything else is the validator's job.
+ * only what makes a document meaningless without it — a foreign-currency
+ * document with no RON tax currency, no lines, no VAT breakdown; everything
+ * else is the validator's job, so the reader can hold whatever ANAF accepted.
  */
 final readonly class Document
 {
@@ -82,10 +82,6 @@ final readonly class Document
 
         if ($taxSubtotals === []) {
             throw new InvalidArgumentException('A document needs at least one VAT breakdown (BR-CO-18).');
-        }
-
-        if ($type->requiresPrecedingDocuments() && $precedingDocuments === []) {
-            throw new InvalidArgumentException(sprintf('A %s document must reference the invoice it credits or corrects (BT-25).', $type->value));
         }
 
         self::assertAll($lines, Line::class, 'lines');

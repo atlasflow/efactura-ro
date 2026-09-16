@@ -25,8 +25,13 @@ enum DocumentType: string
         return $this === self::CREDIT_NOTE;
     }
 
-    /** BT-25 is mandatory for a credit note or a corrective invoice: something is being credited or corrected. */
-    public function requiresPrecedingDocuments(): bool
+    /**
+     * A credit note or a corrective invoice refers to something, so a caller
+     * building one should supply BT-25. ANAF's validator does not insist on
+     * it (checked 2026-09-16 with MF's own credit note sample), so neither
+     * does construction; this is advice for eligibility checks upstream.
+     */
+    public function expectsPrecedingDocuments(): bool
     {
         return $this === self::CREDIT_NOTE || $this === self::CORRECTED_INVOICE;
     }
